@@ -775,7 +775,7 @@ def unregister():
 serial_connection = SerialConnection()
 object_movement = ObjectMovement()
 
-bpy.app.timers.register(object_movement.update_scene)
+bpy.app.timers.register(object_movement.update_scene,persistent=True)
 
 if __name__ == "__main__":
     register()
