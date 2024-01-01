@@ -42,7 +42,7 @@ The Blendix Serial Control add-on allows you to control 3D objects in Blender us
 2. The connection will be closed, and you will see a message confirming the disconnection.
 
 ### `Additional Resources`
-For more information and examples, you can visit the [Blendix Serial Control documentation](https://arduinomagix.blogspot.com/p/blender-serial-control-addon.html).
+For more information and examples, you can visit the [Blendix Serial Control documentation](https://electronicstree.com/blendixserial-addon/).
 
 ### `License`
 The Blendix Serial Control add-on is distributed under the GNU General Public License. Please refer to the license text for more details.
