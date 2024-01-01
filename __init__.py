@@ -21,7 +21,7 @@ bl_info = {
     "blender" : (3, 5, 1),
     "version" : (0, 12, 0),
     "location" : "View3D > Properties > blendix serial",
-    "doc_url": "https://arduinomagix.blogspot.com/p/blender-serial-control-addon.html",
+    "doc_url": "https://electronicstree.com/blendixserial-addon/",
     "category" : "3D View"
 }
 
