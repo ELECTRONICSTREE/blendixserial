@@ -1,0 +1,26 @@
+schema_version = "1.0.0"
+
+id = "blendixserial"
+version = "1.0.0"
+name = "blendixserial"
+tagline = "A Blender add-on for controlling 3D objects in Blender using a simple UART"
+maintainer = "Usman"
+type = "add-on"
+
+ website = "https://electronicstree.com/blendixserial-addon/"
+tags = ["Animation", "3D View"]
+blender_version_min = "4.2.0"
+
+license = ["SPDX:GPL-3.0"]
+ copyright = [
+   "2023-2025 Usman",
+   "2024-2025 electronicstree",
+ ]
+
+ platforms = ["windows-x64", "macos-arm64", "linux-x64"]
+
+paths_exclude_pattern = [
+   "__pycache__/",
+   "/.git/",
+   "/*.zip",
+ ]
