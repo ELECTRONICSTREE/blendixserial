@@ -110,17 +110,20 @@ def update_text_objects(scene, text_data, numerical_data):
             received_text_obj.data.body = text_data
 
 
-def build_axis_text(index, show_x, show_y, show_z, numerical_data): 
-    axis_text = ""
+def build_axis_text(index, show_x, show_y, show_z, numerical_data):
+    axis_text_parts = []
     
     if show_x and (index * 3 < len(numerical_data)):
-        axis_text += f"X: {numerical_data[index * 3]:.2f} "
+        axis_text_parts.append(f" {numerical_data[index * 3]:.2f}")
     if show_y and (index * 3 + 1 < len(numerical_data)):
-        axis_text += f"Y: {numerical_data[index * 3 + 1]:.2f} "
+        axis_text_parts.append(f" {numerical_data[index * 3 + 1]:.2f}")
     if show_z and (index * 3 + 2 < len(numerical_data)):
-        axis_text += f"Z: {numerical_data[index * 3 + 2]:.2f} "
+        axis_text_parts.append(f" {numerical_data[index * 3 + 2]:.2f}")
     
-    return axis_text
+    use_newline = bpy.context.scene.axis_text_newline
+    separator = "\n" if use_newline else " "
+    
+    return separator.join(axis_text_parts)
 
 
 

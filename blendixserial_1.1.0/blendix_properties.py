@@ -213,6 +213,11 @@ bpy.types.Scene.frame_skip_interval = bpy.props.IntProperty(
         min=0  
     )
 
+bpy.types.Scene.axis_text_newline = bpy.props.BoolProperty(
+    name="Display Axis on New Lines",
+    description="Display each axis value on a new line instead of a single line",
+    default=False
+)
 
 def register():
     bpy.types.Scene.serial_connection_properties = bpy.props.PointerProperty(type=SerialConnectionProperties)

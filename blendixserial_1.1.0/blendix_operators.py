@@ -80,6 +80,8 @@ class ShowSettingsPopup(bpy.types.Operator):
         row.prop(item, "show_y", text="Y")
         row.prop(item, "show_z", text="Z")
 
+        box.prop(scene, "axis_text_newline", text="Display axis on new lines")
+
         box.separator()  
 
         reset_operator = layout.operator(ResetTransformsOperator.bl_idname, text="Reset Transforms", icon="LOOP_BACK")
