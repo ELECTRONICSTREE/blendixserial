@@ -2,6 +2,7 @@ import bpy
 from .blendix_connection import serial_thread, serial_connection
 import math
 import serial
+from bpy.app.handlers import persistent
 
 
 
@@ -128,7 +129,7 @@ def build_axis_text(index, show_x, show_y, show_z, numerical_data):
 
 
 
-
+@persistent
 def on_frame_change_post(scene):
 
     frame_skip_interval = scene.frame_skip_interval if hasattr(scene, "frame_skip_interval") else 1
