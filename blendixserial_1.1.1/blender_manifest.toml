@@ -1,7 +1,7 @@
 schema_version = "1.0.0"
 
 id = "blendixserial"
-version = "1.0.0"
+version = "1.2.0"
 name = "blendixserial"
 tagline = "A Blender add-on for controlling 3D objects in Blender using a simple UART"
 maintainer = "Usman"
