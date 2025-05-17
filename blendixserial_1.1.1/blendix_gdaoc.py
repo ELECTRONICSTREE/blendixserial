@@ -41,8 +41,9 @@ def process_data(context, numerical_data, text_data):
     scene = context.scene
     if numerical_data:
         update_objects(scene, numerical_data)
+        update_axis_text_objects(scene, numerical_data)
     if text_data:
-        update_text_objects(scene, text_data, numerical_data)  
+        update_received_text(text_data) 
 
 
 def update_objects(scene, numerical_data):
@@ -94,7 +95,8 @@ def update_scale(obj, selected_axes, numerical_data, base_index):
         obj.scale.z = numerical_data[base_index + 2]
 
 
-def update_text_objects(scene, text_data, numerical_data):  
+def update_axis_text_objects(scene, numerical_data):
+    # Update text objects associated with custom objects in the scene.
     for i, item in enumerate(scene.custom_object_collection):
         text_object_axis = item.text_object_axis
         show_x = item.show_x
@@ -102,14 +104,15 @@ def update_text_objects(scene, text_data, numerical_data):
         show_z = item.show_z
 
         if text_object_axis:
-            axis_text = build_axis_text(i, show_x, show_y, show_z, numerical_data)  
+            axis_text = build_axis_text(i, show_x, show_y, show_z, numerical_data)
             text_object_axis.data.body = axis_text
 
+def update_received_text(text_data):
+    # Update the separate received text object if available and valid.
     if text_data:
         received_text_obj = bpy.context.scene.received_text
         if received_text_obj and received_text_obj.type == 'FONT':
             received_text_obj.data.body = text_data
-
 
 def build_axis_text(index, show_x, show_y, show_z, numerical_data):
     axis_text_parts = []
@@ -125,6 +128,7 @@ def build_axis_text(index, show_x, show_y, show_z, numerical_data):
     separator = "\n" if use_newline else " "
     
     return separator.join(axis_text_parts)
+
 
 
 
