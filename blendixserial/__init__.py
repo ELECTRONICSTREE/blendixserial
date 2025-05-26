@@ -14,9 +14,9 @@
 bl_info = {
     "name": "blendixserial",
     "author": "Usman",
-    "description": "3D Object control via Simple UART (Serial Communication)",
+    "description": "Connect Blender to External Devices via Simple UART (Serial Communication)",
     "blender": (4, 2, 0),
-    "version": (1, 2, 0),
+    "version": (1, 3, 0),
     "location": "View3D > Properties > blendixserial",
     "category": "3D View",
 }
@@ -26,6 +26,9 @@ bl_info = {
 # Cross-platform serial port detection | Automatic PySerial installation | Text data receiving issue fix in receiving mode
 
 
+# 26/5/2025 - M.Usman - electronicstree.com
+#------------------------------------------
+# Dual Send Mode Support
 
 import bpy
 import os

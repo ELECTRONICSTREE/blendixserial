@@ -219,6 +219,16 @@ bpy.types.Scene.axis_text_newline = bpy.props.BoolProperty(
     default=False
 )
 
+bpy.types.Scene.send_data_method = bpy.props.EnumProperty(
+        name="Send Method",
+        description="Choose how to send data: on frame change or using timer",
+        items=[
+            ('KEYFRAME', "Keyframe Based", "Send data using frame change events"),
+            ('TIMER', "Timer Based", "Send data using a timer function")
+        ],
+        default='KEYFRAME'
+    )
+
 def register():
     bpy.types.Scene.serial_connection_properties = bpy.props.PointerProperty(type=SerialConnectionProperties)
     bpy.types.Scene.custom_object_collection = CollectionProperty(type=DynamicObjectProperties)

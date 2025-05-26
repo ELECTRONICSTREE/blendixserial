@@ -35,6 +35,59 @@ def timer_func():
     
     return  bpy.context.scene.updateSceneDelay   
 
+# Timer + Keyframe Shared 
+def send_serial_data():
+    scene = bpy.context.scene
+
+    if (
+        serial_connection._serial_connection is not None
+        and serial_connection._serial_connection.is_open
+        and serial_thread.pause_movement is False
+        and serial_thread.mode in ['send', 'both']
+    ):
+        try:
+            data_to_send = ""
+
+            for i, item in enumerate(scene.send_object_collection):
+                obj = item.sel_object
+                property_name = item.property_name
+                selected_axes = item.selected_axes
+
+                data_to_send += format_data_for_object(obj, property_name, selected_axes)
+
+                if i < len(scene.send_object_collection) - 1:
+                    data_to_send += ", "
+
+            data_to_send += ";"
+
+            serial_thread.queue_send_data(data_to_send)
+
+            if scene.data_processing_send_debug_mode:
+                print(f"Data Processing Debugging:--> Data queued to send: {data_to_send}")
+
+        except serial.SerialException:
+            if scene.data_processing_send_debug_mode:
+                print("Data Processing Debugging:--> Error writing data to serial port")
+            serial_connection.disconnect(serial_thread)
+
+# Timer-Based – new behavior triggered via manual transform controls or
+# driver/Geometry Nodes-driven animations (independent of keyframes or playback).
+def send_timer_func():
+    if bpy.context.scene.send_data_method == 'TIMER':
+        send_serial_data()
+    return bpy.context.scene.updateSceneDelay
+
+
+# Keyframe-Based – triggered by timeline frame changes 
+@persistent
+def on_frame_change_post(scene):
+    if scene.send_data_method != 'KEYFRAME':
+        return  
+
+    frame_skip_interval = getattr(scene, "frame_skip_interval", 1)
+    if frame_skip_interval == 0 or scene.frame_current % frame_skip_interval == 0:
+        send_serial_data()
+
 
 
 def process_data(context, numerical_data, text_data):
@@ -128,53 +181,6 @@ def build_axis_text(index, show_x, show_y, show_z, numerical_data):
     separator = "\n" if use_newline else " "
     
     return separator.join(axis_text_parts)
-
-
-
-
-
-@persistent
-def on_frame_change_post(scene):
-
-    frame_skip_interval = scene.frame_skip_interval if hasattr(scene, "frame_skip_interval") else 1
-
-    if frame_skip_interval == 0:
-        send_data = True
-    else:
-        send_data = bpy.context.scene.frame_current % frame_skip_interval == 0
-
-    if send_data:
-        if (
-            serial_connection._serial_connection is not None
-            and serial_connection._serial_connection.is_open
-            and serial_thread.pause_movement is False
-            and serial_thread.mode in ['send', 'both']  
-        ):
-            try:
-                data_to_send = ""
-                
-                for i, item in enumerate(scene.send_object_collection):
-                    obj = item.sel_object
-                    property_name = item.property_name
-                    selected_axes = item.selected_axes
-                    
-                    data_to_send += format_data_for_object(obj, property_name, selected_axes)
-
-                    if i < len(scene.send_object_collection) - 1:
-                        data_to_send += ", "
-
-                data_to_send += ";"
-
-                serial_thread.queue_send_data(data_to_send)
-
-                if bpy.context.scene.data_processing_send_debug_mode:
-                    print(f"Data Processing Debugging:--> Data queued to send: {data_to_send}")
-
-            except serial.SerialException:
-                if bpy.context.scene.data_processing_send_debug_mode:
-                    print("Data Processing Debugging:--> Error writing data to serial port")
-                serial_connection.disconnect(serial_thread)
-
 
                 
 def format_data_for_object(obj, transform_property, selected_axes):

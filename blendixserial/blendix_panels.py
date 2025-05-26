@@ -110,14 +110,15 @@ class UserInterfacePanel(Panel):
             remove_button.index = i
 
     def draw_send_tab(self, layout, scene):
-        layout.label(text="Send Keyframe Data", icon='ANIM')
-        layout.prop(scene, "frame_skip_interval")
-        send_box = layout.box()
-        send_box.operator("object.add_send_object", text="Add New Object to Send")
-        layout.separator()
+        mainbox = layout.box()  
+        mainbox.prop(scene, "send_data_method")
+        if scene.send_data_method == 'KEYFRAME':
+            mainbox.prop(scene, "frame_skip_interval")
+        mainbox.operator("object.add_send_object", text="Add New Object to Send")
+        mainbox.separator()
 
         for i, item in enumerate(scene.send_object_collection):
-            item_box = send_box.box()
+            item_box = mainbox.box()
             row = item_box.row()
             row.prop(item, "sel_object", text="Object {}".format(i + 1))
 
