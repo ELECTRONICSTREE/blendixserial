@@ -224,4 +224,5 @@ def format_data_for_object(obj, transform_property, selected_axes):
 
 bpy.app.handlers.frame_change_post.append(on_frame_change_post)
 bpy.app.timers.register(timer_func, persistent=True)
+bpy.app.timers.register(send_timer_func, persistent=True)
 
