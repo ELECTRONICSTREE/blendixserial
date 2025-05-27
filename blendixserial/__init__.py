@@ -16,7 +16,7 @@ bl_info = {
     "author": "Usman",
     "description": "Connect Blender to External Devices via Simple UART (Serial Communication)",
     "blender": (4, 2, 0),
-    "version": (1, 3, 0),
+    "version": (1, 3, 1),
     "location": "View3D > Properties > blendixserial",
     "category": "3D View",
 }
@@ -29,6 +29,11 @@ bl_info = {
 # 26/5/2025 - M.Usman - electronicstree.com
 #------------------------------------------
 # Dual Send Mode Support
+
+
+# 27/5/2025 - M.Usman - electronicstree.com
+#------------------------------------------
+# Patch: (Send) Resolves Timer Registration issue
 
 import bpy
 import os
